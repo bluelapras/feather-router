@@ -1,6 +1,25 @@
 {
   "name": "feather-router",
+  "version": "0.0.1",
   "license": "MIT",
+  "description": "Lightweight and lightning fast routing for React applications",
+  "author": {
+    "name": "Lapras"
+  },
+  "contributors": [],
+  "repository": "bluelapras/feather-router",
+  "homepage": "https://github.com/bluelapras/feather-router",
+  "bugs": "https://github.com/bluelapras/feather-router/issues",
+  "keywords": [
+    "feather-router",
+    "react",
+    "routing",
+    "router",
+    "route",
+    "hooks",
+    "useBrowserPath",
+    "useRouteParams"
+  ],
   "packageManager": "yarn@3.5.0",
   "main": "dist/feather-router.js",
   "scripts": {
