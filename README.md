@@ -11,7 +11,7 @@
 
 <!-- Feather Router Hero Example -->
 <div align="center">
-  <img src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/feather-hero-example.png" />
+  <img src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/feather-hero-example.svg" />
 </div>
 
 <!-- Feather Router Description -->
