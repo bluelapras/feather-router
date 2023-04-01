@@ -6,7 +6,7 @@ import { RouterContext } from "./router";
 interface RouteProps {
   path: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component: React.FunctionComponent<any>;
+  component?: React.FunctionComponent<any>;
   children?: React.ReactNode;
 }
 
@@ -16,7 +16,7 @@ interface RouteData {
   path: string;
   regex: RegExp;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component: React.FunctionComponent<any>;
+  component?: React.FunctionComponent<any>;
 }
 
 /**
@@ -55,12 +55,12 @@ function Route({ path, component: Component, ...props }: RouteProps) {
       routerState.dispatch && routerState.dispatch({ type: "removeRoute", routeID: ROUTE_ID_CLOSURE_VAR });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [FULL_ROUTE_PATH, Component]); // Do not add routeState or an infinite loop will occur: Route updates Router, which updates Route.
+  }, [FULL_ROUTE_PATH, Component]); // Do not add routeState or an infinite loop will occur: Route updates routerState, which updates Route.
 
   return (
     <>
       {
-        ORDERED_ROUTE_ID.current === routerState.matchedRouteData.routeID && (
+        ORDERED_ROUTE_ID.current === routerState.matchedRouteData.routeID && Component && (
           <Component {...routerState.matchedRouteData.routeParams} />
         ) /* Render the component */
       }

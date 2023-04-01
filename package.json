@@ -21,11 +21,15 @@
     "useRouteParams"
   ],
   "packageManager": "yarn@3.5.0",
-  "main": "dist/feather-router.js",
+  "main": "./dist/feather-router.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "./dist/**"
+  ],
   "scripts": {
     "lint": "eslint --fix src",
     "format": "prettier --write src",
-    "build": "webpack"
+    "build": "webpack && tsc"
   },
   "peerDependencies": {
     "react": "*"
@@ -35,6 +39,7 @@
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.4",
+    "@types/node": "^18.15.11",
     "@types/react": "^18.0.31",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
