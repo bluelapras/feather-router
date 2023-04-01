@@ -22,8 +22,6 @@ Feather Router is designed with simplicity and ease of use in mind, making it an
 
 ## Table of Contents
 
----
-
 - [API Reference](#feather-router-api)
   - [Components](#components)
     - [`<Router />`](#router)
@@ -33,8 +31,6 @@ Feather Router is designed with simplicity and ease of use in mind, making it an
     - [`useBrowserPath`](#)
 
 ## Feather Router API
-
----
 
 Feather Router provides a set of hooks and components that enable you to manage navigation and routing logic in your React application.
 
@@ -46,8 +42,6 @@ Feather Router provides a set of hooks and components that enable you to manage 
 ### Hooks
 
 ## Contributing
-
----
 
 We love contributions to Feather Router, and welcome developers of all levels to get involved! Here's how you can contribute:
 
