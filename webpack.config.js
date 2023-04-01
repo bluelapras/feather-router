@@ -31,6 +31,7 @@ module.exports = () => {
       clean: true,
       publicPath: "./",
     },
+    devtool: "source-map",
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".jsx"],
     },
@@ -46,6 +47,9 @@ module.exports = () => {
     },
     externals: {
       react: "react",
+    },
+    optimization: {
+      mangleExports: "size",
     },
   };
 };
