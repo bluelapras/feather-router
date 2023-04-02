@@ -1,7 +1,10 @@
 <!-- Feather Router LOGO -->
 <p align="center">
-  <img width="300" src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/light-mode/feather-router-logo.png#gh-light-mode-only" />
   <img width="300" src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/dark-mode/feather-router-logo.png#gh-dark-mode-only" />
+</p>
+
+<p align="center">
+  <img width="300" src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/light-mode/feather-router-logo.png#gh-light-mode-only" />
 </p>
 
 <!-- Feather Router Badges -->
@@ -11,7 +14,7 @@
 
 <!-- Feather Router Hero Example -->
 <div align="center">
-  <img src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/feather-hero-example.svg" />
+  <img src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/feather-hero-example.png" />
 </div>
 
 <!-- Feather Router Description -->
@@ -25,21 +28,121 @@ Feather Router is designed with simplicity and ease of use in mind, making it an
 - [API Reference](#feather-router-api)
   - [Components](#components)
     - [`<Router />`](#router)
-    - [`<Route />`](#route)
-  - Hooks
-    - [`useRouteParams`](#)
-    - [`useBrowserPath`](#)
+    - [`<Route />`](#route-path-component)
+  - [Hooks](#hooks)
+    - [`useRouteParams`]
+    - [`useBrowserPath`]
 
 ## Feather Router API
 
-Feather Router provides a set of hooks and components that enable you to manage navigation and routing logic in your React application.
+Feather Router provides a set of components and hooks that enable you to manage navigation and routing logic in your React application.
 
 ### Components
 
-- \<Router \/\> — Top level component which handles routing logic for child routes.
-- \<Route \/\> — Component which renders a component conditionally depending on if the current browser URL matches the `path` prop.
+**Summary**
+
+- `<Router />` is a top level component which wraps `<Route />` components. It handles the logic of rendering the correct child `<Route />` for the current browser path.
+- `<Route />` components define what content is displayed when a particular URL is accessed.
+
+**API**
+
+### `<Router />`
+
+A top-level routing component that manages client side navigation by rendering child `<Route />` components based on the current browser path.
+
+> **Tip**: Browser path refers to the unique, last part of a URL.
+>
+> - The URL www.example.com has a browser path of "/"
+> - The URL www.example.com/about has a browser path of "/about".
+
+All child `<Route />` components must be nested within a parent `<Router />` component.
+
+```jsx
+import { Router, Route } from "feather-router";
+
+function App() {
+  return (
+    <Router>
+      <Route path="/" component={HomePage} />
+      <Route path="/about" component={AboutPage} />
+    </Router>
+  );
+}
+```
+
+In this example:
+
+- If the user navigates to `www.example.com`, the `HomePage` component is rendered.
+- If the user navigates to `www.example.com/about`, the `AboutPage` component is rendered.
+
+> **Read more** → How does `<Router />` match a `<Route />`?
+
+### `<Route path="" component={} />`
+
+The Route component defines the React component that should be rendered for a given browser path.
+
+> **Tip**: A `<Route />` component must be nested within a parent `<Router />` component!
+
+- `path` is a **required property**. It is a string which represents the browser path of the `<Route />`. It must start with a forward slash `/`.
+- `component` is **an optional property**. It is the React component that will be rendered if the browser path matches the path specified by the `<Route />`
+
+`<Route />` components can use wildcard **dynamic segments** in their path to match anything. The syntax for creating a dynamic segment is square brackets: `[property_name]`.
+
+> **Example**: `<Route path="/user/[id]" component={UserPage} />`
+
+In the above example, browser URLs such as:
+
+- `www.example.com/user/foo`
+- `www.example.com/user/bar`
+- `www.example.com/user/bazz`
+
+Will all match the path specified by the example `<Route />`. The value of the dynamic segment (foo, bar, bazz) is extracted from the URL, and will be passed as a property to the `UserPage` component. The name of the property in this example is `id`.
+
+When you create a dynamic segment, Feather Router uses the text inside of the`[square_brackets]` as the property name. A path can have multiple dynamic segments.
+
+`<Route path="/[foo]/[bar]/[baz]" component={MyComponent} />` will pass properties named `foo` and `bar` to `MyComponent`.
+
+`<Route />` components can also be nested within other `<Route />` components.
+
+```jsx
+import { Router, Route } from "feather-router";
+
+function App() {
+  return <>
+    <Router>
+      <Route path="/" component={HomePage}> /> // A
+      <Route path="/blog"> // B
+        <Route path="/[blog_id]" component={BlogPage} /> // C
+        <Route path="/new" component={NewBlogPage} /> // D
+      </Route>
+    </Router>
+  </>
+}
+```
+
+In this example:
+
+- `www.example.com` matches route A.
+- `www.example.com/blog` matches route B. Since no component was provided, nothing is rendered.
+- `www.example.com/blog/new` matches route D.
+- `www.example.com/blog/57` matches route C, and provides a property named `blog_id` with value "57" to component `BlogPage`.
+
+```jsx
+function BlogPage({ blog_id }) {
+  return <>
+    <h1>Welcome to Blog #{blog_id}</h1>
+  <>
+}
+```
+
+Did you notice that `www.example.com/blog/new` matched route D, even though it met the criteria for route C as well? In the event of multiple routes matching a browser path, Feather Router will favour **static routes** over **dynamic routes**.
+
+> A static route is a route that does not contain any dynamic segments. A dynamic route is a route that contains dynamic segments.
 
 ### Hooks
+
+- `useRouteParams` provides a direct way to access the dynamic parameters that are matched by the current URL.
+- `useBrowserPath` provides a straightforward means of modifying and retrieving the current URL path.
 
 ## Contributing
 
