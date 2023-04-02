@@ -52,8 +52,8 @@ A top-level routing component that manages client side navigation by rendering c
 
 > **Tip**: Browser path refers to the unique, last part of a URL.
 >
-> - The URL www.example.com has a browser path of "/"
-> - The URL www.example.com/about has a browser path of "/about".
+> - The URL `www.example.com` has a browser path of "/"
+> - The URL `www.example.com/about` has a browser path of "/about".
 
 All child `<Route />` components must be nested within a parent `<Router />` component.
 
@@ -100,7 +100,7 @@ Will all match the path specified by the example `<Route />`. The value of the d
 
 When you create a dynamic segment, Feather Router uses the text inside of the`[square_brackets]` as the property name. A path can have multiple dynamic segments.
 
-`<Route path="/[foo]/[bar]/[baz]" component={MyComponent} />` will pass properties named `foo` and `bar` to `MyComponent`.
+`<Route path="/[foo]/[bar]/[baz]" component={MyComponent} />` will pass properties named `foo`, `bar`, and `baz` to `MyComponent`.
 
 `<Route />` components can also be nested within other `<Route />` components.
 

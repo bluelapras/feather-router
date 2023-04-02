@@ -1,6 +1,6 @@
 {
   "name": "feather-router",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "description": "Lightweight and lightning fast routing for React applications",
   "author": {
