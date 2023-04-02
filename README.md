@@ -1,10 +1,10 @@
 <!-- Feather Router LOGO -->
 <p align="center">
-  <img width="300" src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/dark-mode/feather-router-logo.png#gh-dark-mode-only" />
+  <img width="300" src="https://raw.githubusercontent.com/bluelapras/feather-router/main/static/dark-mode/feather-router-logo.png#gh-dark-mode-only" />
 </p>
 
 <p align="center">
-  <img width="300" src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/light-mode/feather-router-logo.png#gh-light-mode-only" />
+  <img width="300" src="https://raw.githubusercontent.com/bluelapras/feather-router/main/static/light-mode/feather-router-logo.png#gh-light-mode-only" />
 </p>
 
 <!-- Feather Router Badges -->
@@ -14,7 +14,7 @@
 
 <!-- Feather Router Hero Example -->
 <div align="center">
-  <img src="https://raw.githubusercontent.com/0xFlareon/feather-router/main/static/feather-hero-example.png" />
+  <img src="https://raw.githubusercontent.com/bluelapras/feather-router/main/static/feather-hero-example.png" />
 </div>
 
 <!-- Feather Router Description -->
