@@ -1,17 +1,23 @@
 <!-- Feather Router LOGO -->
 <p align="center">
-  <img width="300" src="https://raw.githubusercontent.com/bluelapras/feather-router/main/static/dark-mode/feather-router-logo.png#gh-dark-mode-only" />
+  <img width="300" draggable="false" src="https://raw.githubusercontent.com/bluelapras/feather-router/main/static/dark-mode/feather-router-logo.png#gh-dark-mode-only" />
 </p>
 
 <p align="center">
-  <img width="300" src="https://raw.githubusercontent.com/bluelapras/feather-router/main/static/light-mode/feather-router-logo.png#gh-light-mode-only" />
+  <img width="300" draggable="false" src="https://raw.githubusercontent.com/bluelapras/feather-router/main/static/light-mode/feather-router-logo.png#gh-light-mode-only" />
 </p>
 
 <!-- Feather Router Badges -->
 <p align="center">
-<img alt="npm" src="https://img.shields.io/npm/dw/feather-router?style=for-the-badge">
-<img alt="npm" src="https://img.shields.io/npm/v/feather-router?style=for-the-badge">
-<img alt="NPM" src="https://img.shields.io/npm/l/feather-router?style=for-the-badge">
+  <a href="https://www.npmjs.com/package/feather-router">
+    <img alt="npm" src="https://img.shields.io/npm/dw/feather-router?style=for-the-badge">
+  </a>
+  <a href="https://www.npmjs.com/package/feather-router">
+    <img alt="npm" src="https://img.shields.io/npm/v/feather-router?style=for-the-badge">
+  </a>
+  <a href="https://www.npmjs.com/package/feather-router">
+    <img alt="NPM" src="https://img.shields.io/npm/l/feather-router?style=for-the-badge">
+  </a>
 </p>
 
 <!-- Feather Router Hero Example -->
