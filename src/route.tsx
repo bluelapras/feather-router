@@ -15,8 +15,6 @@ interface RouteData {
   routeID: number;
   path: string;
   regex: RegExp;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: React.FunctionComponent<any>;
 }
 
 /**
@@ -47,7 +45,6 @@ function Route({ path, component: Component, ...props }: RouteProps) {
           routeID: ORDERED_ROUTE_ID.current,
           path: FULL_ROUTE_PATH,
           regex: generatePathRegex(FULL_ROUTE_PATH),
-          component: Component,
         },
       });
 
@@ -60,9 +57,9 @@ function Route({ path, component: Component, ...props }: RouteProps) {
   return (
     <>
       {
-        ORDERED_ROUTE_ID.current === routerState.matchedRouteData.routeID && Component && (
-          <Component {...routerState.matchedRouteData.routeParams} />
-        ) /* Render the component */
+        routerState.matchedRouteData &&
+          ORDERED_ROUTE_ID.current === routerState.matchedRouteData.routeID &&
+          Component && <Component {...routerState.matchedRouteData.routeParams} /> /* Render the component */
       }
       {props.children && (
         <RouteContext.Provider value={{ fullParentPath: FULL_ROUTE_PATH }}>
