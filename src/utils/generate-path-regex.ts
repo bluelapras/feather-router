@@ -4,14 +4,14 @@
 function generatePathRegex(unparsedPath: string) {
   // Regex for splitting the path up
   const PATH_PARSE_REGEX = /(?:\/([^/]+))+?/g;
-  // /books/[id]/view => MATCH: books [id] view
+  // /books/[id]/view => MATCH: books :id view
   const pathSegments = Array.from(unparsedPath.matchAll(PATH_PARSE_REGEX), (match) => match[1]);
-  // pathSegments looks like ["books", "[id]", "view"]
+  // pathSegments looks like ["books", ":id", "view"]
 
-  const DYNAMIC_SEGMENT_REGEX = /\[(?<param_name>.+?)\]/g;
-  // [id] => MATCH: id
+  const DYNAMIC_SEGMENT_REGEX = /:(?<param_name>.+)/g;
+  // :id => MATCH: id
 
-  let regexString = "^";
+  let regexString = escapeString("^");
   pathSegments.forEach((segment) => {
     regexString += "\\/";
     if (segment.match(DYNAMIC_SEGMENT_REGEX)) {
@@ -21,7 +21,7 @@ function generatePathRegex(unparsedPath: string) {
       regexString += escapeString(segment);
     }
   });
-  regexString += "$";
+  regexString += escapeString("$");
   return RegExp(regexString, "i");
 }
 

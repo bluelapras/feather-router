@@ -13,8 +13,8 @@ interface RouterProps {
  * <Router>
  *  <Route path="/home" component={HomePage} />
  *  <Route path="/blog" component={BlogPage}>
- *    <Route path="/[id]" component={BlogPage} /> // By default, router will inject id as a prop into BlogPage
- *    <Route path="/new/[id]" component={CreateBlogPage} />
+ *    <Route path="/:id" component={BlogPage} /> // By default, router will inject id as a prop into BlogPage
+ *    <Route path="/new/:id" component={CreateBlogPage} />
  *  </Route>
  * </Router>
  *

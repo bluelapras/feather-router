@@ -107,9 +107,9 @@ The Route component defines the React component that should be rendered for a gi
 - `path` is a **required property**. It is a string which represents the browser path of the `<Route />`. It must start with a forward slash `/`.
 - `component` is **an optional property**. It is the React component that will be rendered if the browser path matches the path specified by the `<Route />`
 
-`<Route />` components can use wildcard **dynamic segments** in their path to match anything. The syntax for creating a dynamic segment is square brackets: `[property_name]`.
+`<Route />` components can use wildcard **dynamic segments** in their path to match anything. The syntax for creating a dynamic segment is a colon `:property_name`.
 
-> **Example**: `<Route path="/user/[id]" component={UserPage} />`
+> **Example**: `<Route path="/user/:id" component={UserPage} />`
 
 In the above example, browser URLs such as:
 
@@ -119,9 +119,9 @@ In the above example, browser URLs such as:
 
 Will all match the path specified by the example `<Route />`. The value of the dynamic segment (foo, bar, bazz) is extracted from the URL, and will be passed as a property to the `UserPage` component. The name of the property in this example is `id`.
 
-When you create a dynamic segment, Feather Router uses the text inside of the`[square_brackets]` as the property name. A path can have multiple dynamic segments.
+When you create a dynamic segment, Feather Router uses the text after the `:` (colon) as the property name. A path can have multiple dynamic segments.
 
-`<Route path="/[foo]/[bar]/[baz]" component={MyComponent} />` will pass properties named `foo`, `bar`, and `baz` to `MyComponent`.
+`<Route path="/:foo/:bar/:baz" component={MyComponent} />` will pass properties named `foo`, `bar`, and `baz` to `MyComponent`.
 
 `<Route />` components can also be nested within other `<Route />` components.
 
@@ -133,7 +133,7 @@ function App() {
     <Router>
       <Route path="/" component={HomePage}> /> // A
       <Route path="/blog"> // B
-        <Route path="/[blog_id]" component={BlogPage} /> // C
+        <Route path="/:blog_id" component={BlogPage} /> // C
         <Route path="/new" component={NewBlogPage} /> // D
       </Route>
     </Router>

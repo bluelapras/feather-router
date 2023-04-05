@@ -33,7 +33,7 @@ function Route({ path, component: Component, ...props }: RouteProps) {
   // Update the parent Router when the route is mounted / unmounted
   useEffect(() => {
     // Regex for detecting if the Route is dynamic
-    const DYNAMIC_ROUTE_REGEX = /\/\[[^/]+?\]/;
+    const DYNAMIC_ROUTE_REGEX = /\/:[^/]+/;
     // Provide cleanup effect closure over the ref
     const ROUTE_ID_CLOSURE_VAR = ORDERED_ROUTE_ID.current;
 
@@ -77,12 +77,12 @@ function Route({ path, component: Component, ...props }: RouteProps) {
  * Each Route component provides a RouteContext, which contains the full parent path of the parent
  * In this case:
  * - The "/books" Route has a has no parent Route, and hence also has no parent RouteContext: fullParentPath = ""
- * - The "/[id]"" Route has a parent RouteContext: fullParentPath: fullParentPath = "/[id]"
- * - The "/purchase" Route has a parent RouteContext: "/books/[id]"
+ * - The "/:id"" Route has a parent RouteContext: fullParentPath: fullParentPath = "/:id"
+ * - The "/purchase" Route has a parent RouteContext: "/books/:id"
  * @example
  * <Router>
  *  <Route path="/books">
- *    <Route path="/[id]">
+ *    <Route path="/:id">
  *      <Route path="/purchase" />
  *    </Route>
  *  </Route>
