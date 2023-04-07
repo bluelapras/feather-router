@@ -18,6 +18,9 @@
   <a href="https://www.npmjs.com/package/feather-router">
     <img alt="NPM" src="https://img.shields.io/npm/l/feather-router?style=for-the-badge">
   </a>
+    <a href="https://www.npmjs.com/package/feather-router">
+    <img alt="NPM" src="https://img.shields.io/bundlephobia/minzip/feather-router?style=for-the-badge">
+  </a>
 </p>
 
 <!-- Feather Router Hero Example -->

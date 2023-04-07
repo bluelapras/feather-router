@@ -1,110 +1,76 @@
-import React, { memo, createContext, useReducer, useEffect, Dispatch } from "react";
-import { RouteData } from "./route";
-import { useBrowserPath } from "./useBrowserLocation";
+import React, { useState, useEffect, createContext } from "react";
+import { generatePathRegex, routeType } from "./utils/generate-path-regex";
+import { useBrowserPath } from "./useBrowserPath";
 
-interface RouterProps {
-  children?: React.ReactNode;
+interface Route {
+  path: string;
+  component: React.FunctionComponent<unknown>;
 }
-
+interface ParsedRoute extends Route {
+  regex: RegExp;
+  type: "static" | "dynamic";
+}
+interface RouteMatch {
+  route: ParsedRoute | null;
+  params: object | null;
+}
+interface RouterProps {
+  routes: Route[];
+  staticPath?: string;
+}
 /**
  * Top level component which handles routing logic
  *
  * @example
- * <Router>
- *  <Route path="/home" component={HomePage} />
- *  <Route path="/blog" component={BlogPage}>
- *    <Route path="/:id" component={BlogPage} /> // By default, router will inject id as a prop into BlogPage
- *    <Route path="/new/:id" component={CreateBlogPage} />
- *  </Route>
- * </Router>
+ * <Router config={...} />
  *
  */
-function Router({ ...props }: RouterProps) {
-  // Store the child route data
-  const [routerState, dispatch] = useReducer(RouterContextReducer, {
-    routes: [],
-    matchedRouteData: null,
-    dispatch: null,
-  });
-
+function Router({ routes, staticPath = "/" }: RouterProps) {
   // Current browser path
-  const [browserPath] = useBrowserPath();
+  const [browserPath] = useBrowserPath(staticPath);
+
+  // Current route
+  const [matchedRoute, setMatchedRoute] = useState<RouteMatch | null>(null);
+
+  // Parse routes
+  const PARSED_ROUTES: ParsedRoute[] = routes.map((route) => ({
+    path: route.path,
+    component: route.component,
+    regex: generatePathRegex(route.path),
+    type: routeType(route.path),
+  }));
 
   // When the browserPath or routes changes, determine the correct Route to render
   useEffect(() => {
+    let matchedRoute: ParsedRoute | null = null as unknown as ParsedRoute; // Cast since TS is unable to know that it is reassigned off null later.
+
     // Handle matching
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let routeMatchData: { routeID: number; routeParams: { [key: string]: any } | null; routeType: string } | null =
-      null;
-    // Favour static route matches over dynamic route matches.
-    routerState.routes.forEach((route) => {
-      if (route.regex.test(browserPath)) {
-        if (routeMatchData === null || routeMatchData.routeType !== "static") {
-          routeMatchData = {
-            routeID: route.routeID,
-            routeParams: browserPath.match(route.regex)?.groups || null, // undefined || null => null,
-            routeType: route.type,
-          };
+    PARSED_ROUTES.forEach((parsedRoute) => {
+      if (parsedRoute.regex.test(browserPath)) {
+        if (matchedRoute === null) {
+          matchedRoute = parsedRoute;
+        } else if (parsedRoute.type === "static" && matchedRoute.type !== "static") {
+          matchedRoute = parsedRoute;
         }
       }
     });
-    dispatch({
-      type: "setMatchedRouteData",
-      matchedRouteData: routeMatchData,
+
+    setMatchedRoute({
+      route: matchedRoute,
+      params: matchedRoute === null ? null : browserPath.match(matchedRoute.regex)?.groups || null,
     });
-  }, [browserPath, routerState.routes]);
+  }, [PARSED_ROUTES, browserPath]);
 
-  return <RouterContext.Provider value={{ ...routerState, dispatch }}>{props.children}</RouterContext.Provider>;
+  return (
+    <RouterContext.Provider value={{ params: { ...(matchedRoute?.params || null) } }}>
+      {matchedRoute?.route?.component && <matchedRoute.route.component {...matchedRoute.params} />}
+    </RouterContext.Provider>
+  );
 }
 
-// Router context
 interface RouterContextState {
-  routes: RouteData[];
-  matchedRouteData: {
-    routeID: number;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    routeParams: { [key: string]: any } | null; // null means no params
-  } | null; // matchedRouteData === null means no matching route
-  dispatch: Dispatch<Action> | null;
+  params: object | null;
 }
+const RouterContext = createContext<RouterContextState>({ params: null });
 
-type Action = Action_AddRoute | Action_RemoveRoute | Action_SetMatchedRouteData;
-
-interface Action_AddRoute {
-  type: "addRoute";
-  route: RouteData;
-}
-
-interface Action_RemoveRoute {
-  type: "removeRoute";
-  routeID: number;
-}
-
-interface Action_SetMatchedRouteData {
-  type: "setMatchedRouteData";
-  matchedRouteData: {
-    routeID: number;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    routeParams: { [key: string]: any } | null;
-  } | null;
-}
-// Router reducer
-const RouterContextReducer = (state: RouterContextState, action: Action): RouterContextState => {
-  switch (action.type) {
-    case "addRoute": {
-      return { ...state, routes: [...state.routes, action.route] };
-    }
-    case "removeRoute": {
-      return { ...state, routes: state.routes.filter((route) => route.routeID !== action.routeID) };
-    }
-    case "setMatchedRouteData": {
-      return { ...state, matchedRouteData: action.matchedRouteData };
-    }
-  }
-};
-
-const RouterContext = createContext<RouterContextState>(null as unknown as RouterContextState);
-
-const RouterMemo = memo(Router);
-
-export { RouterMemo as Router, RouterContext };
+export { Router, RouterContext };

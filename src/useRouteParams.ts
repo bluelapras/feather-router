@@ -5,7 +5,7 @@ import { RouterContext } from "./router";
  */
 function useRouteParams() {
   const routerState = useContext(RouterContext);
-  return routerState.matchedRouteData ? routerState.matchedRouteData.routeParams : null;
+  return routerState.params;
 }
 
 export { useRouteParams };

@@ -33,4 +33,16 @@ function escapeString(str: string) {
   return str.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
 }
 
-export { generatePathRegex };
+/**
+ * Returns the route type (static, dynamic, 404)
+ */
+function routeType(path: string) {
+  const DYNAMIC_ROUTE_REGEX = /\/:[^/]+/;
+  if (DYNAMIC_ROUTE_REGEX.test(path)) {
+    return "dynamic";
+  } else {
+    return "static";
+  }
+}
+
+export { generatePathRegex, routeType };
